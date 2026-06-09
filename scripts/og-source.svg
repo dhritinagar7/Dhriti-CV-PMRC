@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fdfaf4"/>
+      <stop offset="1" stop-color="#f3eee2"/>
+    </linearGradient>
+    <clipPath id="disc"><circle cx="960" cy="315" r="200"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#sky)"/>
+
+  <!-- sunrise mark -->
+  <g clip-path="url(#disc)">
+    <rect x="760" y="115" width="400" height="400" fill="#f3eee2"/>
+    <circle cx="960" cy="560" r="250" fill="#e08a1e" opacity="0.95"/>
+    <circle cx="960" cy="640" r="200" fill="#b35a10"/>
+  </g>
+  <circle cx="960" cy="315" r="200" fill="none" stroke="#1f1d1a" stroke-opacity="0.18" stroke-width="2"/>
+
+  <!-- text -->
+  <text x="90" y="250" font-family="Georgia, 'Times New Roman', serif" font-size="78" font-weight="600" fill="#1f1d1a">Dhriti Nagar</text>
+  <text x="92" y="312" font-family="Helvetica, Arial, sans-serif" font-size="33" fill="#b35a10">Developmental neuroscientist and stem cell biologist</text>
+  <text x="92" y="392" font-family="Helvetica, Arial, sans-serif" font-size="27" fill="#565049">Human models of the developing brain,</text>
+  <text x="92" y="430" font-family="Helvetica, Arial, sans-serif" font-size="27" fill="#565049">built to understand disease and reach patients sooner.</text>
+  <text x="92" y="545" font-family="Helvetica, Arial, sans-serif" font-size="22" fill="#8a8278">Postdoctoral Research Scholar, Stanford University</text>
+</svg>

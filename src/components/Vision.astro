@@ -1,0 +1,94 @@
+---
+import { SITE } from '../config/site';
+
+const principles = [
+  {
+    sanskrit: 'Vasudhaiva Kutumbakam',
+    gloss: 'The world is one family.',
+  },
+  {
+    sanskrit: 'Sarvajana Hitaya, Sarvajana Sukhaya',
+    gloss: 'For the welfare and the happiness of all.',
+  },
+  {
+    sanskrit: 'Advaita',
+    gloss: 'Non-duality: the recognition that, beneath the surface, we are not separate.',
+  },
+];
+---
+
+<section class="section vision" id="vision">
+  <div class="wrap reveal">
+    <p class="eyebrow">Vision and values</p>
+    <h2>Science is worth doing when it changes lives.</h2>
+
+    <div class="prose">
+      <p class="lead">
+        She believes science should change the world, in small increments or in leaps, and that
+        social impact is the whole point. Progress that reaches only a few is not yet finished.
+      </p>
+      <p>
+        That belief shapes who she stands with. She is a committed advocate for women, for the
+        LGBTQ+ community, and for people pushed to the margins, in the lab and beyond it. She
+        wants the people around her to grow, and she measures her own work partly by how much it
+        helps them.
+      </p>
+      <p>
+        Her longer horizon reaches home. She hopes to help build India into a force for global
+        good: a country whose science, talent, and care strengthen the whole world. The science
+        and the citizenship are, to her, the same project.
+      </p>
+    </div>
+
+    <ul class="principles">
+      {principles.map((p) => (
+        <li class="principle reveal">
+          <span class="sanskrit" lang="sa">{p.sanskrit}</span>
+          <span class="gloss">{p.gloss}</span>
+        </li>
+      ))}
+    </ul>
+
+    {SITE.venturesUrl && (
+      <p class="ventures">
+        Alongside her research, she is a founder working in regenerative medicine.{' '}
+        <a href={SITE.venturesUrl} rel="noopener">See her ventures</a>.
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .principles {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-l) 0 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .principle {
+    display: grid;
+    gap: 0.2rem;
+    padding-left: var(--space-m);
+    border-left: 2px solid var(--accent);
+    max-width: var(--measure);
+  }
+
+  .sanskrit {
+    font-family: var(--font-serif);
+    font-size: var(--step-1);
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .gloss {
+    color: var(--ink-soft);
+  }
+
+  .ventures {
+    margin-top: var(--space-l);
+    color: var(--ink-soft);
+    max-width: var(--measure);
+  }
+</style>

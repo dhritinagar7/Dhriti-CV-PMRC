@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Research from '../components/Research.astro';
+import Vision from '../components/Vision.astro';
+import SelectedWork from '../components/SelectedWork.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base path="/" showPersonSchema={true}>
+  <Nav />
+  <main id="main">
+    <Hero />
+    <About />
+    <Research />
+    <Vision />
+    <SelectedWork />
+    <Contact />
+  </main>
+  <Footer />
+</Base>

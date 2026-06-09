@@ -1,0 +1,75 @@
+---
+import { SITE } from '../config/site';
+
+const links = [
+  SITE.email && { label: 'Email', href: `mailto:${SITE.email}`, text: SITE.email },
+  SITE.linkedin && { label: 'LinkedIn', href: SITE.linkedin, text: 'in/dhritinagar' },
+  SITE.scholar && { label: 'Google Scholar', href: SITE.scholar, text: 'Scholar profile' },
+  SITE.orcid && { label: 'ORCID', href: SITE.orcid, text: SITE.orcid.replace('https://orcid.org/', '') },
+  SITE.github && { label: 'GitHub', href: SITE.github, text: 'GitHub' },
+  SITE.twitter && { label: 'X', href: SITE.twitter, text: 'Profile' },
+].filter(Boolean) as { label: string; href: string; text: string }[];
+---
+
+<section class="section" id="contact">
+  <div class="wrap reveal">
+    <p class="eyebrow">Contact</p>
+    <h2>Let's talk.</h2>
+
+    <p class="lead measure">
+      The best way to reach me is by email. I am glad to hear from collaborators, students,
+      and anyone whose work touches the developing brain.
+    </p>
+
+    <dl class="contact-list">
+      {links.map((l) => (
+        <div class="contact-row">
+          <dt>{l.label}</dt>
+          <dd>
+            <a href={l.href} rel="noopener">{l.text}</a>
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<style>
+  .contact-list {
+    margin-top: var(--space-l);
+    display: grid;
+    gap: 0;
+    max-width: var(--measure);
+  }
+
+  .contact-row {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: var(--space-m);
+    padding-block: var(--space-s);
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .contact-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  dt {
+    font-size: var(--step--1);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .contact-row {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

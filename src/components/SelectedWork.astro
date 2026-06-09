@@ -1,0 +1,173 @@
+---
+import { SITE } from '../config/site';
+import { PUBLICATIONS, PATENTS, TALKS, HONORS, ME } from '../data/cv';
+import { markAuthors } from '../utils/authors';
+
+const pubs = PUBLICATIONS.filter((p) => p.selected);
+const talks = TALKS.filter((t) => t.selected);
+const honors = HONORS.filter((h) => h.selected);
+
+const profileLinks = [
+  SITE.scholar && { label: 'Google Scholar', href: SITE.scholar },
+  SITE.orcid && { label: 'ORCID', href: SITE.orcid },
+].filter(Boolean) as { label: string; href: string }[];
+---
+
+<section class="section" id="work">
+  <div class="wrap reveal">
+    <p class="eyebrow">Selected work</p>
+    <h2>A short, current view. The full record lives in the CV.</h2>
+
+    {profileLinks.length > 0 && (
+      <p class="profiles">
+        Complete publication list:{' '}
+        {profileLinks.map((l, i) => (
+          <>
+            {i > 0 && <span class="sep"> &middot; </span>}
+            <a href={l.href} rel="noopener">{l.label}</a>
+          </>
+        ))}
+      </p>
+    )}
+
+    <div class="work-grid">
+      <div class="work-col">
+        <h3 class="work-h">Publications and preprints</h3>
+        <ul class="work-list">
+          {pubs.map((p) => (
+            <li>
+              <span class="authors">
+                {markAuthors(p.authors, ME).map((a, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    {a.isMe ? <strong>{a.name}</strong> : a.name}
+                  </>
+                ))}
+              </span>{' '}
+              <span class="title">{p.title}.</span>{' '}
+              <span class="venue">{p.venue}, {p.year}{p.note ? ` (${p.note})` : ''}.</span>
+              {p.doi && (
+                <>
+                  {' '}
+                  <a class="doi" href={`https://doi.org/${p.doi}`} rel="noopener">doi</a>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="work-col">
+        <h3 class="work-h">Patents</h3>
+        <ul class="work-list">
+          {PATENTS.map((pt) => (
+            <li>
+              <span class="title">{pt.title}.</span>{' '}
+              <span class="venue">{pt.status}.</span>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="work-h">Invited talks</h3>
+        <ul class="work-list">
+          {talks.map((t) => (
+            <li>
+              <span class="title">{t.title}.</span>{' '}
+              <span class="venue">{t.venue}, {t.year}.</span>
+            </li>
+          ))}
+        </ul>
+
+        <h3 class="work-h">Honors</h3>
+        <ul class="work-list">
+          {honors.map((h) => (
+            <li>
+              <span class="title">{h.title}.</span>{' '}
+              <span class="venue">{h.year}.</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <p class="cv-cta">
+      <a class="btn btn-solid" href="/cv">Read the full CV</a>
+      <a class="btn" href={SITE.cvPdf} download>Download PDF</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .profiles {
+    color: var(--ink-soft);
+    margin-bottom: var(--space-l);
+  }
+  .sep {
+    color: var(--ink-faint);
+  }
+
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-l);
+  }
+
+  @media (min-width: 760px) {
+    .work-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xl);
+    }
+  }
+
+  .work-h {
+    font-size: var(--step--1);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-s);
+  }
+  .work-h:not(:first-child) {
+    margin-top: var(--space-l);
+  }
+
+  .work-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .work-list li {
+    font-size: var(--step-0);
+    line-height: 1.5;
+  }
+
+  .authors {
+    color: var(--ink-soft);
+  }
+  .authors strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .title {
+    color: var(--ink);
+  }
+  .venue {
+    color: var(--ink-soft);
+  }
+  .doi {
+    font-size: var(--step--1);
+    font-variant: small-caps;
+    letter-spacing: 0.04em;
+  }
+
+  .cv-cta {
+    margin-top: var(--space-xl);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+</style>

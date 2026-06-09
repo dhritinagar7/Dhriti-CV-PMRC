@@ -1,0 +1,322 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { SITE } from '../config/site';
+import {
+  EDUCATION,
+  POSITIONS,
+  PUBLICATIONS,
+  PATENTS,
+  TALKS,
+  HONORS,
+  TEACHING,
+  SERVICE,
+  ME,
+} from '../data/cv';
+import { markAuthors } from '../utils/authors';
+---
+
+<Base title="Curriculum Vitae" path="/cv">
+  <Nav />
+
+  <main id="main" class="cv">
+    <div class="wrap wrap-wide">
+      <header class="cv-head">
+        <div>
+          <h1>{SITE.name}<span class="cred">, {SITE.credential}</span></h1>
+          <p class="cv-role">{SITE.jobTitle}, {SITE.affiliation}</p>
+          <p class="cv-contact">
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            {SITE.linkedin && (<><span class="dot">&middot;</span><a href={SITE.linkedin} rel="noopener">LinkedIn</a></>)}
+            {SITE.scholar && (<><span class="dot">&middot;</span><a href={SITE.scholar} rel="noopener">Google Scholar</a></>)}
+            {SITE.orcid && (<><span class="dot">&middot;</span><a href={SITE.orcid} rel="noopener">ORCID</a></>)}
+          </p>
+        </div>
+        <a class="btn btn-solid cv-dl" href={SITE.cvPdf} download>Download PDF</a>
+      </header>
+
+      <!-- Education -->
+      <section class="cv-section">
+        <h2>Education</h2>
+        {EDUCATION.map((e) => (
+          <div class="entry">
+            <div class="entry-main">
+              <p class="entry-title">{e.degree}</p>
+              <p class="entry-sub">{e.place}</p>
+              {e.detail && <p class="entry-detail">{e.detail}</p>}
+            </div>
+            <p class="entry-year">{e.year}</p>
+          </div>
+        ))}
+      </section>
+
+      <!-- Positions -->
+      <section class="cv-section">
+        <h2>Positions and research experience</h2>
+        {POSITIONS.map((p) => (
+          <div class="entry">
+            <div class="entry-main">
+              <p class="entry-title">{p.role}</p>
+              <p class="entry-sub">{p.place}</p>
+              {p.detail && <p class="entry-detail">{p.detail}</p>}
+            </div>
+            <p class="entry-year">{p.period}</p>
+          </div>
+        ))}
+      </section>
+
+      <!-- Publications -->
+      <section class="cv-section">
+        <h2>Publications and preprints</h2>
+        <ol class="pub-list">
+          {PUBLICATIONS.map((p) => (
+            <li>
+              <span class="authors">
+                {markAuthors(p.authors, ME).map((a, i) => (
+                  <>
+                    {i > 0 && ', '}
+                    {a.isMe ? <strong>{a.name}</strong> : a.name}
+                  </>
+                ))}
+              </span>{' '}
+              <span class="pub-title">{p.title}.</span>{' '}
+              <span class="pub-venue">{p.venue}</span>, {p.year}{p.note ? ` (${p.note})` : ''}.
+              {p.doi && (<> doi:<a href={`https://doi.org/${p.doi}`} rel="noopener">{p.doi}</a></>)}
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <!-- Patents -->
+      <section class="cv-section">
+        <h2>Patents</h2>
+        <ul class="plain-list">
+          {PATENTS.map((pt) => (
+            <li>
+              <span class="pub-title">{pt.title}.</span>{' '}
+              <span class="pub-venue">{pt.status}.</span>
+              {pt.detail && <span class="entry-detail"> {pt.detail}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Talks -->
+      <section class="cv-section">
+        <h2>Invited talks and presentations</h2>
+        <ul class="plain-list">
+          {TALKS.map((t) => (
+            <li>
+              <span class="pub-title">{t.title}.</span>{' '}
+              <span class="pub-venue">{t.venue}</span>, {t.year}.
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Honors -->
+      <section class="cv-section">
+        <h2>Honors, fellowships and grants</h2>
+        <ul class="plain-list">
+          {HONORS.map((h) => (
+            <li>
+              <span class="pub-title">{h.title}</span> <span class="entry-year inline">{h.year}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <!-- Teaching -->
+      <section class="cv-section">
+        <h2>Teaching and mentorship</h2>
+        <ul class="plain-list">
+          {TEACHING.map((t) => (<li>{t}</li>))}
+        </ul>
+      </section>
+
+      <!-- Service -->
+      <section class="cv-section">
+        <h2>Service, outreach and leadership</h2>
+        <ul class="plain-list">
+          {SERVICE.map((s) => (<li>{s}</li>))}
+        </ul>
+      </section>
+
+      <p class="cv-foot-note">
+        This is a curated web CV. For the complete, formatted record, download the
+        <a href={SITE.cvPdf} download> PDF</a>.
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .cv {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .cv-head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-m);
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: var(--space-l);
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: var(--space-l);
+  }
+
+  .cv-head h1 {
+    font-size: var(--step-3);
+  }
+  .cred {
+    color: var(--ink-faint);
+    font-weight: 400;
+  }
+  .cv-role {
+    color: var(--ink-soft);
+    margin-top: 0.3rem;
+  }
+  .cv-contact {
+    margin-top: 0.5rem;
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+  }
+  .cv-contact .dot {
+    margin: 0 0.5rem;
+    color: var(--ink-faint);
+  }
+
+  .cv-section {
+    margin-top: var(--space-xl);
+  }
+
+  .cv-section h2 {
+    font-size: var(--step-1);
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--space-m);
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--space-m);
+    padding-block: var(--space-s);
+    align-items: baseline;
+  }
+  .entry + .entry {
+    border-top: 1px solid var(--line);
+  }
+
+  .entry-title {
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .entry-sub {
+    color: var(--ink-soft);
+    font-size: var(--step-0);
+  }
+  .entry-detail {
+    color: var(--ink-soft);
+    font-size: var(--step--1);
+    margin-top: 0.2rem;
+  }
+  .entry-year {
+    color: var(--ink-faint);
+    font-size: var(--step--1);
+    white-space: nowrap;
+    text-align: right;
+  }
+  .entry-year.inline {
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .pub-list,
+  .plain-list {
+    margin: 0;
+    padding-left: 1.4rem;
+    display: grid;
+    gap: var(--space-s);
+  }
+  .plain-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .plain-list li {
+    padding-left: var(--space-m);
+    position: relative;
+  }
+  .plain-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .pub-list li,
+  .plain-list li {
+    font-size: var(--step-0);
+    line-height: 1.55;
+  }
+  .authors {
+    color: var(--ink-soft);
+  }
+  .authors strong {
+    color: var(--ink);
+  }
+  .pub-title {
+    color: var(--ink);
+  }
+  .pub-venue {
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .cv-foot-note {
+    margin-top: var(--space-2xl);
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+  }
+
+  /* ---- Print: clean black-on-white, no nav/footer/buttons ------------- */
+  @media print {
+    :global(.nav),
+    :global(.footer),
+    .cv-dl,
+    .cv-foot-note,
+    :global(.skip) {
+      display: none !important;
+    }
+    .cv {
+      padding: 0;
+    }
+    .cv-section {
+      margin-top: 1.4rem;
+      break-inside: avoid;
+    }
+    .cv-section h2 {
+      color: #000;
+    }
+    .pub-list li,
+    .plain-list li,
+    .entry {
+      break-inside: avoid;
+    }
+    .cv-head {
+      border-color: #000;
+    }
+  }
+</style>
