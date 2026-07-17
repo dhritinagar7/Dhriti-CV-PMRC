@@ -1,0 +1,55 @@
+---
+import { SITE, NAV } from '../config/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="wrap wrap-wide footer-inner">
+    <nav class="footer-links" aria-label="Footer">
+      {NAV.map((item) => (
+        <a href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+
+    <p class="footer-meta">
+      &copy; {year} {SITE.name}.{' '}
+      <span class="muted">Guided by Sarvajana Hitaya, Sarvajana Sukhaya.</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--line);
+    padding-block: var(--space-xl);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.4rem;
+  }
+
+  .footer-links a {
+    font-size: var(--step--1);
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  .footer-meta {
+    font-size: var(--step--1);
+    color: var(--ink-faint);
+  }
+  .muted {
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,310 @@
+/* ============================================================================
+   DESIGN TOKENS
+   Everything visual is a variable so it can be swapped in one place.
+   To change the accent: edit the --accent* values under ":root" (dawn) and
+   the dark block. An alternate "depth" palette is provided in comments.
+   ============================================================================ */
+
+:root {
+  /* ---- Type ---------------------------------------------------------- */
+  --font-serif: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  /* Modular scale (1.2 minor third), fluid via clamp where it matters. */
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.13rem + 0.35vw, 1.4rem);
+  --step-2: clamp(1.44rem, 1.32rem + 0.6vw, 1.85rem);
+  --step-3: clamp(1.9rem, 1.6rem + 1.5vw, 2.75rem);
+  --step-4: clamp(2.4rem, 1.9rem + 2.6vw, 4rem);
+
+  --measure: 68ch; /* comfortable body line length */
+
+  /* ---- Spacing ------------------------------------------------------- */
+  --space-xs: 0.5rem;
+  --space-s: 0.85rem;
+  --space-m: 1.4rem;
+  --space-l: 2.4rem;
+  --space-xl: 4rem;
+  --space-2xl: 6.5rem;
+
+  --radius: 10px;
+  --maxw: 46rem;       /* content column */
+  --maxw-wide: 64rem;  /* wider rows, e.g. CV */
+
+  /* ---- Colour: LIGHT (dawn) ----------------------------------------- */
+  --paper: #fbf8f2;       /* warm off-white */
+  --paper-2: #f3eee2;     /* raised surfaces */
+  --ink: #1f1d1a;         /* warm near-black */
+  --ink-soft: #565049;    /* secondary text */
+  --ink-faint: #8a8278;   /* captions, meta */
+  --line: rgba(31, 29, 26, 0.13);
+  --line-strong: rgba(31, 29, 26, 0.28);
+
+  /* Dawn accent: deep saffron that passes AA on paper for text + links.
+     --accent-bright is decorative only (the sunrise mark, hovers). */
+  --accent: #b35a10;
+  --accent-bright: #e08a1e;
+  --accent-contrast: #ffffff; /* text on a solid accent fill */
+
+  /* DEPTH alternative (teal). To switch palettes, replace the three lines
+     above with:
+        --accent: #0e6b64;
+        --accent-bright: #2f9d93;
+        --accent-contrast: #ffffff;
+     and in the dark block below use --accent: #4fbdb4; --accent-bright: #6fd0c6; */
+
+  --selection: rgba(224, 138, 30, 0.22);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --paper: #16140f;
+  --paper-2: #211d16;
+  --ink: #f1ece1;
+  --ink-soft: #c4bcab;
+  --ink-faint: #948b7b;
+  --line: rgba(241, 236, 225, 0.14);
+  --line-strong: rgba(241, 236, 225, 0.3);
+
+  --accent: #f0a94a;
+  --accent-bright: #f6c178;
+  --accent-contrast: #1a1610;
+
+  --selection: rgba(240, 169, 74, 0.26);
+
+  color-scheme: dark;
+}
+
+/* Respect OS preference when the user has not chosen manually. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #16140f;
+    --paper-2: #211d16;
+    --ink: #f1ece1;
+    --ink-soft: #c4bcab;
+    --ink-faint: #948b7b;
+    --line: rgba(241, 236, 225, 0.14);
+    --line-strong: rgba(241, 236, 225, 0.3);
+    --accent: #f0a94a;
+    --accent-bright: #f6c178;
+    --accent-contrast: #1a1610;
+    --selection: rgba(240, 169, 74, 0.26);
+    color-scheme: dark;
+  }
+}
+
+/* ============================================================================
+   RESET & BASE
+   ============================================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* clears the sticky nav on anchor jumps */
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--paper);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: 540;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+a:hover {
+  text-decoration-color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ============================================================================
+   LAYOUT HELPERS
+   ============================================================================ */
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2rem);
+}
+
+.wrap-wide {
+  max-width: var(--maxw-wide);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+  border-top: 1px solid var(--line);
+}
+
+.section:first-of-type {
+  border-top: none;
+}
+
+.measure {
+  max-width: var(--measure);
+}
+
+/* Small eyebrow label above section headings. */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-s);
+}
+
+.section h2 {
+  font-size: var(--step-3);
+  margin-bottom: var(--space-m);
+}
+
+.lead {
+  font-size: var(--step-1);
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.prose > * + * {
+  margin-top: var(--space-m);
+}
+
+.prose p {
+  max-width: var(--measure);
+}
+
+/* Skip link for keyboard users. */
+.skip {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  border-radius: 0 0 var(--radius) 0;
+}
+.skip:focus {
+  left: 0;
+}
+
+/* ============================================================================
+   BUTTONS / PILLS
+   ============================================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.7rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  background: transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.btn:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.btn-solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.btn-solid:hover {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: var(--accent-contrast);
+}
+
+/* ============================================================================
+   ENTRANCE ANIMATION (reveal on scroll)
+   ============================================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

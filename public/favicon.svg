@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Rising sun mark">
+  <defs>
+    <clipPath id="c"><circle cx="32" cy="32" r="30"/></clipPath>
+  </defs>
+  <g clip-path="url(#c)">
+    <rect width="64" height="64" fill="#fbf8f2"/>
+    <circle cx="32" cy="70" r="40" fill="#e08a1e"/>
+    <circle cx="32" cy="82" r="32" fill="#b35a10"/>
+  </g>
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#1f1d1a" stroke-opacity="0.25" stroke-width="2"/>
+</svg>

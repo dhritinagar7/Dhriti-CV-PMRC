@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-label="Headshot placeholder">
+  <!--
+    PLACEHOLDER headshot. Replace by setting `headshot` in src/config/site.ts
+    to a real square photo in /public (WebP or JPG, at least 600x600).
+    This transparent placeholder lets the sunrise mark show through.
+  -->
+  <rect width="240" height="240" fill="none"/>
+  <g fill="#fbf8f2" fill-opacity="0.0">
+    <circle cx="120" cy="120" r="120"/>
+  </g>
+  <g transform="translate(120,118)" fill="#1f1d1a" fill-opacity="0.16">
+    <circle cx="0" cy="-22" r="34"/>
+    <path d="M-66 78 a66 56 0 0 1 132 0 Z"/>
+  </g>
+</svg>
