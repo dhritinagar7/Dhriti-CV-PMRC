@@ -1,24 +1,25 @@
 /* ============================================================================
-   DESIGN TOKENS
-   Everything visual is a variable so it can be swapped in one place.
-   To change the accent: edit the --accent* values under ":root" (dawn) and
-   the dark block. An alternate "depth" palette is provided in comments.
+   DESIGN TOKENS  —  "Swiss Scientific"
+   Precise, gridded, technical. A near-white ground, near-black ink, hairline
+   rules, monospaced metadata, and a single cobalt accent. No gradients.
    ============================================================================ */
 
 :root {
   /* ---- Type ---------------------------------------------------------- */
-  --font-serif: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+  /* Headings are sans in this system; alias kept so any stray reference stays consistent. */
+  --font-serif: var(--font-sans);
 
-  /* Modular scale (1.2 minor third), fluid via clamp where it matters. */
+  --step--2: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
-  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
   --step-1: clamp(1.2rem, 1.13rem + 0.35vw, 1.4rem);
-  --step-2: clamp(1.44rem, 1.32rem + 0.6vw, 1.85rem);
-  --step-3: clamp(1.9rem, 1.6rem + 1.5vw, 2.75rem);
-  --step-4: clamp(2.4rem, 1.9rem + 2.6vw, 4rem);
+  --step-2: clamp(1.5rem, 1.35rem + 0.7vw, 2rem);
+  --step-3: clamp(2rem, 1.6rem + 1.9vw, 3rem);
+  --step-4: clamp(2.6rem, 1.7rem + 4.2vw, 5.6rem);
 
-  --measure: 68ch; /* comfortable body line length */
+  --measure: 64ch;
 
   /* ---- Spacing ------------------------------------------------------- */
   --space-xs: 0.5rem;
@@ -28,69 +29,65 @@
   --space-xl: 4rem;
   --space-2xl: 6.5rem;
 
-  --radius: 10px;
-  --maxw: 46rem;       /* content column */
-  --maxw-wide: 64rem;  /* wider rows, e.g. CV */
+  --radius: 5px;
+  --maxw: 46rem;
+  --maxw-wide: 72rem;
 
-  /* ---- Colour: LIGHT (dawn) ----------------------------------------- */
-  --paper: #fbf8f2;       /* warm off-white */
-  --paper-2: #f3eee2;     /* raised surfaces */
-  --ink: #1f1d1a;         /* warm near-black */
-  --ink-soft: #565049;    /* secondary text */
-  --ink-faint: #8a8278;   /* captions, meta */
-  --line: rgba(31, 29, 26, 0.13);
-  --line-strong: rgba(31, 29, 26, 0.28);
+  /* ---- Colour: LIGHT ------------------------------------------------- */
+  --paper: #fbfbf9;
+  --paper-2: #f1f1ec;
+  --card: #ffffff;
+  --ink: #14140f;
+  --ink-soft: #4c4c44;
+  --ink-faint: #86867c;
+  --line: rgba(20, 20, 15, 0.14);
+  --line-strong: rgba(20, 20, 15, 0.5);
+  --rule: #14140f;              /* heavy structural rules */
 
-  /* Dawn accent: deep saffron that passes AA on paper for text + links.
-     --accent-bright is decorative only (the sunrise mark, hovers). */
-  --accent: #b35a10;
-  --accent-bright: #e08a1e;
-  --accent-contrast: #ffffff; /* text on a solid accent fill */
+  --accent: #2340d8;           /* cobalt: links, numbers, emphasis */
+  --accent-bright: #2340d8;
+  --accent-contrast: #ffffff;
 
-  /* DEPTH alternative (teal). To switch palettes, replace the three lines
-     above with:
-        --accent: #0e6b64;
-        --accent-bright: #2f9d93;
-        --accent-contrast: #ffffff;
-     and in the dark block below use --accent: #4fbdb4; --accent-bright: #6fd0c6; */
-
-  --selection: rgba(224, 138, 30, 0.22);
+  --selection: rgba(35, 64, 216, 0.18);
 
   color-scheme: light;
 }
 
 :root[data-theme='dark'] {
-  --paper: #16140f;
-  --paper-2: #211d16;
-  --ink: #f1ece1;
-  --ink-soft: #c4bcab;
-  --ink-faint: #948b7b;
-  --line: rgba(241, 236, 225, 0.14);
-  --line-strong: rgba(241, 236, 225, 0.3);
+  --paper: #0f0f13;
+  --paper-2: #16161c;
+  --card: #17171d;
+  --ink: #f1f1ec;
+  --ink-soft: #b6b6ad;
+  --ink-faint: #83837a;
+  --line: rgba(241, 241, 236, 0.16);
+  --line-strong: rgba(241, 241, 236, 0.5);
+  --rule: #f1f1ec;
 
-  --accent: #f0a94a;
-  --accent-bright: #f6c178;
-  --accent-contrast: #1a1610;
+  --accent: #7d93ff;
+  --accent-bright: #7d93ff;
+  --accent-contrast: #0f0f13;
 
-  --selection: rgba(240, 169, 74, 0.26);
+  --selection: rgba(125, 147, 255, 0.26);
 
   color-scheme: dark;
 }
 
-/* Respect OS preference when the user has not chosen manually. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --paper: #16140f;
-    --paper-2: #211d16;
-    --ink: #f1ece1;
-    --ink-soft: #c4bcab;
-    --ink-faint: #948b7b;
-    --line: rgba(241, 236, 225, 0.14);
-    --line-strong: rgba(241, 236, 225, 0.3);
-    --accent: #f0a94a;
-    --accent-bright: #f6c178;
-    --accent-contrast: #1a1610;
-    --selection: rgba(240, 169, 74, 0.26);
+    --paper: #0f0f13;
+    --paper-2: #16161c;
+    --card: #17171d;
+    --ink: #f1f1ec;
+    --ink-soft: #b6b6ad;
+    --ink-faint: #83837a;
+    --line: rgba(241, 241, 236, 0.16);
+    --line-strong: rgba(241, 241, 236, 0.5);
+    --rule: #f1f1ec;
+    --accent: #7d93ff;
+    --accent-bright: #7d93ff;
+    --accent-contrast: #0f0f13;
+    --selection: rgba(125, 147, 255, 0.26);
     color-scheme: dark;
   }
 }
@@ -100,30 +97,20 @@
    ============================================================================ */
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
-
-* {
-  margin: 0;
-}
+*::after { box-sizing: border-box; }
+* { margin: 0; }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem; /* clears the sticky nav on anchor jumps */
+  scroll-padding-top: 5rem;
   -webkit-text-size-adjust: 100%;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
   font-family: var(--font-sans);
   font-size: var(--step-0);
-  line-height: 1.65;
+  line-height: 1.6;
   color: var(--ink);
   background: var(--paper);
   font-synthesis: none;
@@ -132,48 +119,44 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-::selection {
-  background: var(--selection);
-}
+::selection { background: var(--selection); }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-serif);
-  font-weight: 540;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  font-weight: 680;
+  line-height: 1.0;
+  letter-spacing: -0.03em;
   color: var(--ink);
   text-wrap: balance;
 }
 
-p {
-  text-wrap: pretty;
-}
+p { text-wrap: pretty; }
 
 a {
   color: var(--accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
-  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
   transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
+a:hover { text-decoration-color: var(--accent); }
 
-a:hover {
-  text-decoration-color: var(--accent);
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
+img { max-width: 100%; height: auto; display: block; }
 
 :focus-visible {
   outline: 2.5px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 3px;
+  border-radius: 2px;
+}
+
+/* Monospaced utility for metadata / labels */
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ============================================================================
@@ -185,33 +168,34 @@ img {
   margin-inline: auto;
   padding-inline: clamp(1.25rem, 5vw, 2rem);
 }
-
-.wrap-wide {
-  max-width: var(--maxw-wide);
-}
+.wrap-wide { max-width: var(--maxw-wide); }
 
 .section {
   padding-block: var(--space-2xl);
   border-top: 1px solid var(--line);
 }
+.section:first-of-type { border-top: none; }
 
-.section:first-of-type {
-  border-top: none;
-}
+.measure { max-width: var(--measure); }
 
-.measure {
-  max-width: var(--measure);
-}
-
-/* Small eyebrow label above section headings. */
+/* Section eyebrow: mono label, cobalt, with a short leading rule. */
 .eyebrow {
-  font-family: var(--font-sans);
-  font-size: var(--step--1);
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
   margin-bottom: var(--space-s);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.eyebrow::before {
+  content: '';
+  width: 1.4rem;
+  height: 1px;
+  background: var(--accent);
 }
 
 .section h2 {
@@ -222,18 +206,13 @@ img {
 .lead {
   font-size: var(--step-1);
   color: var(--ink-soft);
-  line-height: 1.55;
+  line-height: 1.5;
+  font-weight: 400;
 }
 
-.prose > * + * {
-  margin-top: var(--space-m);
-}
+.prose > * + * { margin-top: var(--space-m); }
+.prose p { max-width: var(--measure); }
 
-.prose p {
-  max-width: var(--measure);
-}
-
-/* Skip link for keyboard users. */
 .skip {
   position: absolute;
   left: -999px;
@@ -242,69 +221,56 @@ img {
   background: var(--ink);
   color: var(--paper);
   padding: 0.6rem 1rem;
-  border-radius: 0 0 var(--radius) 0;
 }
-.skip:focus {
-  left: 0;
-}
+.skip:focus { left: 0; }
 
 /* ============================================================================
-   BUTTONS / PILLS
+   BUTTONS  —  rectangular, technical
    ============================================================================ */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-sans);
-  font-size: var(--step--1);
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   line-height: 1;
-  padding: 0.7rem 1.1rem;
-  border-radius: 999px;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius);
   border: 1px solid var(--line-strong);
   color: var(--ink);
-  background: transparent;
+  background: var(--card);
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
-
-.btn:hover {
-  border-color: var(--accent);
-  text-decoration: none;
-}
+.btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
 .btn-solid {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--accent-contrast);
 }
-
 .btn-solid:hover {
-  background: var(--accent-bright);
-  border-color: var(--accent-bright);
+  background: var(--accent);
+  border-color: var(--accent);
   color: var(--accent-contrast);
+  filter: brightness(1.08);
 }
 
 /* ============================================================================
-   ENTRANCE ANIMATION (reveal on scroll)
+   ENTRANCE ANIMATION
    ============================================================================ */
 .reveal {
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.55s ease, transform 0.55s ease;
   will-change: opacity, transform;
 }
-
-.reveal.is-visible {
-  opacity: 1;
-  transform: none;
-}
+.reveal.is-visible { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  .reveal { opacity: 1; transform: none; transition: none; }
 }

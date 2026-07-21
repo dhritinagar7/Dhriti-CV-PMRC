@@ -1,110 +1,115 @@
 ---
 // Research section. Accessible to a smart non-scientist, respectable to a
 // specialist. No proprietary platform names, acronyms, or invented metrics.
+const areas = [
+  {
+    no: '01',
+    title: 'Injury to the newborn brain',
+    meta: 'Prematurity · hypoxia · cerebral palsy',
+    body: 'When a baby is born early or deprived of oxygen, the brain can be injured in ways that lead to lifelong conditions such as cerebral palsy. She models these insults in human tissue to understand the damage and search for ways to protect and repair it.',
+  },
+  {
+    no: '02',
+    title: '22q11.2 deletion syndrome',
+    meta: 'Interneuron balance · mechanism',
+    body: 'A small missing piece of one chromosome carries an outsized risk for the developing brain. She studies how it disrupts the cells that keep brain circuits in balance, and what might be done to restore them.',
+  },
+  {
+    no: '03',
+    title: 'Epilepsy and circuit balance',
+    meta: 'Excitation · inhibition · circuits',
+    body: 'Healthy brains hold a careful balance between signals that excite and signals that calm. When that balance breaks, seizures can follow. Her models reveal how the balance is set during development, and how it fails.',
+  },
+  {
+    no: '04',
+    title: 'From model to medicine',
+    meta: 'Screening · therapeutic testing',
+    body: 'Human models are only worthwhile if they point to treatments. She builds the screening and testing steps a candidate must pass on its way from the dish toward patients.',
+  },
+];
 ---
 
 <section class="section" id="research">
-  <div class="wrap reveal">
+  <div class="wrap wrap-wide reveal">
     <p class="eyebrow">Research</p>
     <h2>Growing the human brain in a dish, to understand it and to heal it.</h2>
 
-    <div class="prose">
-      <p class="lead">
-        Brain organoids are small, self-organizing, three-dimensional models of human brain
-        tissue, grown from stem cells. Assembloids join organoids together so that different
-        brain regions can meet and form the connections they would in a living brain.
-      </p>
-      <p>
-        These models let her study the developing human brain directly, rather than relying on
-        animals alone. She uses them to ask what happens when development is disrupted, and to
-        test whether a candidate therapy can put it back on course. The aim is to learn faster,
-        and more humanely, about disorders that begin before or around birth.
-      </p>
+    <p class="lead measure">
+      Brain organoids are small, self-organizing, three-dimensional models of human brain tissue,
+      grown from stem cells. Assembloids join organoids together so different brain regions can
+      meet and connect, letting her study the developing brain directly.
+    </p>
+
+    <div class="index-list">
+      {areas.map((a) => (
+        <article class="row reveal">
+          <span class="mono no">{a.no}</span>
+          <div class="row-main">
+            <h3>{a.title}</h3>
+            <p>{a.body}</p>
+          </div>
+          <span class="mono row-meta">{a.meta}</span>
+        </article>
+      ))}
     </div>
 
-    <div class="cards">
-      <article class="card reveal">
-        <h3>Injury to the newborn brain</h3>
-        <p>
-          When a baby is born early or deprived of oxygen, the brain can be injured in ways that
-          lead to lifelong conditions such as cerebral palsy. She models these insults in human
-          tissue to understand the damage and to search for ways to protect and repair it.
-        </p>
-      </article>
-
-      <article class="card reveal">
-        <h3>22q11.2 deletion syndrome</h3>
-        <p>
-          A small missing piece of one chromosome carries an outsized risk for the developing
-          brain. She studies how it disrupts the cells that keep brain circuits in balance, and
-          what might be done to restore them.
-        </p>
-      </article>
-
-      <article class="card reveal">
-        <h3>Epilepsy and circuit balance</h3>
-        <p>
-          Healthy brains hold a careful balance between signals that excite and signals that
-          calm. When that balance breaks, seizures can follow. Her models help reveal how the
-          balance is set during development, and how it fails.
-        </p>
-      </article>
-
-      <article class="card reveal">
-        <h3>From model to medicine</h3>
-        <p>
-          Human models are only worthwhile if they point to treatments. She works to carry
-          findings from the dish toward real therapies, building the screening and testing steps
-          that a candidate must pass on its way to patients.
-        </p>
-      </article>
-    </div>
-
-    <p class="research-note">
-      Why it matters: the disorders she works on touch some of the most vulnerable patients
-      there are, often with few options today. Better human models are a faster, more honest
-      path to the treatments those patients need.
+    <p class="research-note measure">
+      Why it matters: the disorders she works on touch some of the most vulnerable patients there
+      are, often with few options today. Better human models are a faster, more honest path to the
+      treatments those patients need.
     </p>
   </div>
 </section>
 
 <style>
-  .cards {
+  .index-list {
     margin-top: var(--space-l);
+    border-top: 1.5px solid var(--rule);
+  }
+
+  .row {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.6rem 1.4rem;
+    padding: clamp(1.3rem, 3vw, 1.9rem) 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    align-items: start;
+  }
+  @media (min-width: 780px) {
+    .row { grid-template-columns: 3rem 1fr 15rem; align-items: baseline; }
   }
 
-  @media (min-width: 640px) {
-    .cards {
-      grid-template-columns: 1fr 1fr;
-    }
+  .row .no { color: var(--accent); padding-top: 0.35rem; }
+
+  .row-main h3 { font-size: var(--step-2); letter-spacing: -0.02em; }
+  .row-main p { margin-top: 0.5rem; color: var(--ink-soft); max-width: 52ch; }
+
+  .row-meta {
+    color: var(--ink-faint);
+    padding-top: 0.35rem;
+  }
+  @media (min-width: 780px) {
+    .row-meta { text-align: right; }
   }
 
-  .card {
-    background: var(--paper);
-    padding: clamp(1.3rem, 3vw, 1.9rem);
+  /* subtle technical hover: cobalt tick on the left */
+  .row::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
   }
-
-  .card h3 {
-    font-size: var(--step-1);
-    margin-bottom: var(--space-xs);
-  }
-
-  .card p {
-    color: var(--ink-soft);
-    font-size: var(--step-0);
-    line-height: 1.55;
-  }
+  .row:hover::before { transform: scaleY(1); }
 
   .research-note {
     margin-top: var(--space-l);
-    max-width: var(--measure);
     padding-left: var(--space-m);
     border-left: 2px solid var(--accent);
     color: var(--ink-soft);
