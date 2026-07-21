@@ -1,5 +1,4 @@
 ---
-import '@fontsource-variable/fraunces';
 import '@fontsource-variable/inter';
 import '../styles/global.css';
 import { SITE } from '../config/site';
@@ -76,8 +75,8 @@ const personSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <meta name="theme-color" content="#fbf8f2" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#16140f" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbfbf9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f0f13" media="(prefers-color-scheme: dark)" />
 
     {showPersonSchema && (
       <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />

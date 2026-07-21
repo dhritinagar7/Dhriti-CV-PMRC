@@ -2,28 +2,20 @@
 import { SITE } from '../config/site';
 
 const principles = [
-  {
-    sanskrit: 'Vasudhaiva Kutumbakam',
-    gloss: 'The world is one family.',
-  },
-  {
-    sanskrit: 'Sarvajana Hitaya, Sarvajana Sukhaya',
-    gloss: 'For the welfare and the happiness of all.',
-  },
-  {
-    sanskrit: 'Advaita',
-    gloss: 'Non-duality: the recognition that, beneath the surface, we are not separate.',
-  },
+  { no: '01', sanskrit: 'Vasudhaiva Kutumbakam', gloss: 'The world is one family.' },
+  { no: '02', sanskrit: 'Sarvajana Hitaya, Sarvajana Sukhaya', gloss: 'For the welfare and the happiness of all.' },
+  { no: '03', sanskrit: 'Advaita', gloss: 'Non-duality: beneath the surface, we are not separate.' },
 ];
 ---
 
 <section class="section vision" id="vision">
-  <div class="wrap reveal">
+  <div class="wrap wrap-wide reveal">
     <p class="eyebrow">Vision and values</p>
-    <h2>Science is worth doing when it changes lives.</h2>
+
+    <p class="statement">Science is worth doing when it <span class="hl">changes lives.</span></p>
 
     <div class="prose">
-      <p class="lead">
+      <p>
         She believes science should change the world, in small increments or in leaps, and that
         social impact is the whole point. Progress that reaches only a few is not yet finished.
       </p>
@@ -35,14 +27,14 @@ const principles = [
       </p>
       <p>
         Her longer horizon reaches home. She hopes to help build India into a force for global
-        good: a country whose science, talent, and care strengthen the whole world. The science
-        and the citizenship are, to her, the same project.
+        good: a country whose science, talent, and care strengthen the whole world.
       </p>
     </div>
 
     <ul class="principles">
       {principles.map((p) => (
-        <li class="principle reveal">
+        <li class="principle">
+          <span class="mono no">{p.no}</span>
           <span class="sanskrit" lang="sa">{p.sanskrit}</span>
           <span class="gloss">{p.gloss}</span>
         </li>
@@ -59,36 +51,39 @@ const principles = [
 </section>
 
 <style>
+  .statement {
+    font-size: var(--step-3);
+    font-weight: 680;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    text-wrap: balance;
+    max-width: 20ch;
+    margin-bottom: var(--space-l);
+  }
+  .statement .hl { color: var(--accent); }
+
+  .vision .prose { max-width: var(--measure); }
+
   .principles {
     list-style: none;
     padding: 0;
-    margin: var(--space-l) 0 0;
-    display: grid;
-    gap: var(--space-m);
+    margin: var(--space-xl) 0 0;
+    border-top: 1.5px solid var(--rule);
   }
-
   .principle {
     display: grid;
-    gap: 0.2rem;
-    padding-left: var(--space-m);
-    border-left: 2px solid var(--accent);
-    max-width: var(--measure);
+    grid-template-columns: 2.5rem 1fr;
+    gap: 0.2rem 1.4rem;
+    padding: var(--space-m) 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
   }
+  @media (min-width: 720px) {
+    .principle { grid-template-columns: 3rem 22rem 1fr; }
+  }
+  .principle .no { color: var(--accent); }
+  .sanskrit { font-style: italic; font-size: var(--step-1); color: var(--ink); }
+  .gloss { color: var(--ink-soft); font-size: var(--step-0); }
 
-  .sanskrit {
-    font-family: var(--font-serif);
-    font-size: var(--step-1);
-    font-style: italic;
-    color: var(--ink);
-  }
-
-  .gloss {
-    color: var(--ink-soft);
-  }
-
-  .ventures {
-    margin-top: var(--space-l);
-    color: var(--ink-soft);
-    max-width: var(--measure);
-  }
+  .ventures { margin-top: var(--space-l); color: var(--ink-soft); max-width: var(--measure); }
 </style>

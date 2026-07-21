@@ -13,8 +13,11 @@ export const SITE = {
   name: 'Dhriti Nagar',
   // Shown after the name in some contexts, e.g. "Dhriti Nagar, PhD".
   credential: 'PhD',
-  // One-line identity. Appears in the hero and meta tags. No em dashes.
+  // One-line identity. Appears in meta tags and the About/CV. No em dashes.
   tagline: 'Developmental neuroscientist and stem cell biologist',
+  // The big hero headline. The part in {curly braces} is set in the cobalt
+  // accent. Keep it short and confident. No em dashes.
+  heroStatement: 'Human models of the {developing brain}, built to understand disease and heal it.',
   // One-sentence vision. Appears under the tagline in the hero.
   visionLine:
     'Building human models of the developing brain to understand disease and bring better therapies to the children who need them.',
