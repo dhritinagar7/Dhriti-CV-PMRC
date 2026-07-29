@@ -10,6 +10,10 @@ export interface Props {
   path?: string;
   /** Set false on pages that should not show the JSON-LD Person record. */
   showPersonSchema?: boolean;
+  /** Per-page share card. Falls back to the site-wide one. */
+  ogImage?: string;
+  /** 'website' for pages, 'article' for a commentary piece. */
+  ogType?: 'website' | 'article';
 }
 
 const {
@@ -17,11 +21,13 @@ const {
   description = `${SITE.name}: ${SITE.tagline}. ${SITE.visionLine}`,
   path = '/',
   showPersonSchema = false,
+  ogImage: ogImageProp,
+  ogType = 'website',
 } = Astro.props;
 
 const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.tagline}`;
 const canonical = new URL(path, SITE.url).href;
-const ogImage = new URL(SITE.ogImage, SITE.url).href;
+const ogImage = new URL(ogImageProp ?? SITE.ogImage, SITE.url).href;
 
 const sameAs = [SITE.linkedin, SITE.scholar, SITE.orcid, SITE.github, SITE.twitter].filter(Boolean);
 
@@ -62,7 +68,7 @@ const personSchema = {
     <meta name="author" content={SITE.name} />
 
     <!-- Open Graph -->
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
@@ -81,6 +87,8 @@ const personSchema = {
     {showPersonSchema && (
       <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
     )}
+
+    <slot name="head" />
 
     <!-- Set theme before paint to avoid a flash. Respects saved choice, else OS. -->
     <script is:inline>

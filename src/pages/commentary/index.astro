@@ -1,0 +1,193 @@
+---
+/**
+ * The commentary index — a register of published pieces.
+ */
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { SITE } from '../../config/site';
+import { PUBLISHED, formatDate, formatStamp } from '../../data/commentary';
+import '../../styles/commentary.css';
+
+const description =
+  'Long-form commentary on science, education policy and public systems in India. Every factual claim traceable, every correction logged in the open.';
+---
+
+<Base title="Commentary" description={description} path="/commentary">
+  <Nav />
+
+  <main id="main" class="cm">
+    <div class="cm-wrap">
+      <header class="cm-mast">
+        <div class="rail">
+          <span>Commentary</span>
+          <span>{PUBLISHED.length} {PUBLISHED.length === 1 ? 'piece' : 'pieces'}</span>
+          <span><a href="/commentary/rss.xml">RSS</a></span>
+        </div>
+
+        <h1>Commentary</h1>
+        <p class="cm-standfirst">{description}</p>
+      </header>
+
+      <div class="cm-list">
+        {PUBLISHED.map((piece) => (
+          <a class="cm-item" href={`/commentary/${piece.slug}`}>
+            <span class="cm-item-stamp">
+              <time datetime={piece.date}>{formatStamp(piece.date)}</time>
+            </span>
+            <span class="cm-item-body">
+              <span class="cm-item-kicker">{piece.kicker}</span>
+              <span class="cm-item-title">{piece.title}</span>
+              <span class="cm-item-stand">{piece.standfirst}</span>
+              <span class="cm-item-meta">
+                {piece.readingTime}
+                {piece.updated && <> · revised {formatDate(piece.updated)}</>}
+                {piece.corrections && piece.corrections.length > 0 && (
+                  <> · {piece.corrections.length} correction{piece.corrections.length > 1 ? 's' : ''} logged</>
+                )}
+              </span>
+            </span>
+          </a>
+        ))}
+
+        {PUBLISHED.length === 0 && (
+          <p class="cm-empty">Nothing published yet.</p>
+        )}
+      </div>
+
+      <section class="cm-method">
+        <h2 class="cm-method-head">Method</h2>
+        <div class="cm-method-body">
+          <p>
+            Every piece here goes through two passes before publication: an adversarial
+            fact-check against primary sources, and an equity review of who a proposal
+            would exclude. Both regularly change what gets published, and when they do,
+            the piece says so.
+          </p>
+          <p>
+            Claims are separated by evidentiary status — what is documented in a record
+            I have read, what is reported but not independently verifiable, and what is
+            not established however widely it is repeated. Sources are numbered and
+            linked. Corrections are logged on the piece rather than edited in silently.
+          </p>
+          <p>
+            If something here is wrong, <a href={`mailto:${SITE.email}`}>write to me</a>.
+          </p>
+        </div>
+      </section>
+
+      <Subscribe />
+    </div>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .cm-list {
+    border-top: 2px solid var(--rule);
+    margin-top: var(--space-xl);
+  }
+
+  .cm-item {
+    display: grid;
+    grid-template-columns: var(--rail, 120px) minmax(0, 1fr);
+    gap: 0 var(--gap, 28px);
+    border-bottom: 1px solid var(--line);
+    padding: var(--space-m) 0;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .cm-item:hover { background: var(--paper-2); }
+  .cm-item:hover .cm-item-title { color: var(--accent); }
+
+  .cm-item-stamp {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--ink-faint);
+    padding-top: 0.35rem;
+  }
+
+  .cm-item-body { display: block; max-width: 58ch; }
+
+  .cm-item-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .cm-item-title {
+    display: block;
+    font-size: var(--step-2);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cm-item-stand {
+    display: block;
+    font-size: var(--step--1);
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .cm-item-meta {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .cm-empty { padding: var(--space-l) 0; color: var(--ink-faint); }
+
+  .cm-method {
+    display: grid;
+    grid-template-columns: var(--rail, 120px) minmax(0, 1fr);
+    gap: 0 var(--gap, 28px);
+    border-top: 2px solid var(--rule);
+    margin-top: var(--space-xl);
+    padding-top: 12px;
+  }
+
+  .cm-method-head {
+    grid-column: 1;
+    display: block;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-size: var(--step--2);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .cm-method-body { grid-column: 2; max-width: 58ch; }
+
+  .cm-method-body p {
+    font-size: var(--step--1);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0 0 var(--space-s);
+  }
+
+  @media (max-width: 560px) {
+    .cm-item, .cm-method { grid-template-columns: 1fr; }
+    .cm-item-stamp { padding-top: 0; margin-bottom: 8px; }
+    .cm-item-body, .cm-method-body { grid-column: 1; }
+    .cm-method-head { margin-bottom: 8px; }
+  }
+</style>
