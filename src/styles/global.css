@@ -192,6 +192,52 @@ img { max-width: 100%; height: auto; display: block; }
 
 .measure { max-width: var(--measure); }
 
+/* ============================================================================
+   SECTION ACCENTS
+   Each section carries its own accent. Set `data-accent="name"` on a section
+   or a page wrapper and everything inside inherits it: eyebrows, numerals,
+   links, rules, buttons, highlights.
+
+   Every palette declares three values, because one colour cannot do both
+   jobs at every brightness:
+     --a-field  the plane. Must reach 4.5:1 against near-black type.
+     --a-lt     resolvable type on the light paper.
+     --a-dk     resolvable type on the dark ground.
+   The mapping from those to --accent happens once, below, and flips by mode.
+
+   All six pairs below were measured against #fbfbf9, #f1f1ec and #0f0f13.
+   If you add a palette, measure it. A colour that looks fine at 80px can be
+   unreadable at 11px, which is where most of these actually get used.
+   ========================================================================= */
+
+[data-accent] {
+  --accent: var(--a-lt);
+  --accent-bright: var(--a-lt);
+  --accent-field: var(--a-field);
+  --accent-contrast: #14140f;
+  --selection: color-mix(in srgb, var(--a-field) 55%, transparent);
+}
+
+:root[data-theme='dark'] [data-accent] {
+  --accent: var(--a-dk);
+  --accent-bright: var(--a-dk);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) [data-accent] {
+    --accent: var(--a-dk);
+    --accent-bright: var(--a-dk);
+  }
+}
+
+/* name          field      light type   dark type          used by       */
+[data-accent='sun']   { --a-field: #ffd100; --a-lt: #6e5400; --a-dk: #ffd100; }
+[data-accent='sky']   { --a-field: #a8d8f0; --a-lt: #15607f; --a-dk: #7fc9ee; }
+[data-accent='lilac'] { --a-field: #cdb8ef; --a-lt: #63389f; --a-dk: #c3a8ea; }
+[data-accent='coral'] { --a-field: #ff9078; --a-lt: #9d3218; --a-dk: #ff9d8a; }
+[data-accent='sage']  { --a-field: #a9dcbe; --a-lt: #2b6a47; --a-dk: #8fd3ae; }
+[data-accent='sand']  { --a-field: #e8d5a8; --a-lt: #6b5320; --a-dk: #dcc188; }
+
 /* Section eyebrow: mono label in the accent, with a short leading rule. */
 .eyebrow {
   font-family: var(--font-mono);
