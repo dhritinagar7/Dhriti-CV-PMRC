@@ -67,6 +67,17 @@ export const SITE = {
   cvPdf: '/Dhriti_Nagar_CV.pdf',
   microProposalPdf: '/Dhriti_Nagar_MicroProposal.pdf',
 
+  /* ---- Newsletter ----------------------------------------------------- */
+  // Buttondown username. Free to 100 subscribers, exportable at any time.
+  // Sign up at buttondown.com, then put your handle here to switch on the
+  // signup form. Leave '' and the form disappears everywhere.
+  // TODO: set this once the Buttondown account exists.
+  newsletter: {
+    handle: '',
+    // Shown on the commentary index so people know what they are getting.
+    cadence: 'No more than one a week, usually far less.',
+  },
+
   /* ---- Analytics (off by default, privacy-respecting only) ----------- */
   // Set `enabled: true` and a Plausible-style domain to switch on a
   // cookieless, no-tracking analytics script. Off until you opt in.
@@ -100,6 +111,7 @@ export const NAV = [
   { label: 'About', href: '/#about' },
   { label: 'Research', href: '/#research' },
   { label: 'Vision', href: '/#vision' },
+  { label: 'Commentary', href: '/commentary' },
   { label: 'Selected work', href: '/#work' },
   { label: 'CV', href: '/cv' },
   { label: 'Contact', href: '/#contact' },

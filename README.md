@@ -119,6 +119,21 @@ there is no flash.
 
 ---
 
+## Commentary
+
+The site publishes long-form commentary at `/commentary`. Pieces are body
+fragments in `src/commentary/`, with their metadata in
+`src/data/commentary.ts`; the layout, share cards, RSS feed and corrections
+log are generated. See **[COMMENTARY.md](./COMMENTARY.md)** for the full
+workflow.
+
+```bash
+npm run commentary:new "Title of the piece"   # scaffold
+npm run commentary:og                         # regenerate share cards
+npm run commentary:archive <slug>             # archive every cited URL
+```
+
+
 ## Deploying to Vercel
 
 This is a static Astro site. Vercel auto-detects the framework.

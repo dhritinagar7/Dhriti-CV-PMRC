@@ -1,0 +1,115 @@
+---
+/**
+ * Newsletter signup. Points at Buttondown, which is free to 100 subscribers
+ * and lets you export the list at any time. Set `newsletter.handle` in
+ * src/config/site.ts to switch it on; leave it '' and this renders nothing.
+ */
+import { SITE } from '../config/site';
+
+const handle = SITE.newsletter?.handle ?? '';
+const action = `https://buttondown.com/api/emails/embed-subscribe/${handle}`;
+---
+
+{handle && (
+  <aside class="sub">
+    <div class="sub-label">Subscribe</div>
+    <div class="sub-body">
+      <p>
+        New commentary by email. No more than one a week, usually far less.
+        Unsubscribe in one click; the list is never shared or sold.
+      </p>
+      <form action={action} method="post" target="_blank" class="sub-form">
+        <label class="sr-only" for="bd-email">Email address</label>
+        <input
+          id="bd-email"
+          type="email"
+          name="email"
+          required
+          placeholder="you@example.com"
+          autocomplete="email"
+        />
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="sub-alt">
+        Or take the <a href="/commentary/rss.xml">RSS feed</a>.
+      </p>
+    </div>
+  </aside>
+)}
+
+<style>
+  .sub {
+    display: grid;
+    grid-template-columns: var(--rail, 120px) minmax(0, 1fr);
+    gap: 0 var(--gap, 28px);
+    border-top: 2px solid var(--rule);
+    margin-top: var(--space-xl);
+    padding-top: 12px;
+  }
+
+  .sub-label {
+    grid-column: 1;
+    font-size: var(--step--2);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .sub-body { grid-column: 2; max-width: 46ch; }
+
+  .sub-body p {
+    font-size: var(--step--1);
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0 0 var(--space-s);
+  }
+
+  .sub-form { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .sub-form input {
+    flex: 1 1 16rem;
+    font: inherit;
+    font-size: var(--step--1);
+    padding: 0.6rem 0.7rem;
+    border: 1px solid var(--line-strong);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 0;
+  }
+
+  .sub-form input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .sub-form button {
+    font: inherit;
+    font-size: var(--step--1);
+    font-weight: 700;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--accent);
+    background: var(--accent);
+    color: var(--accent-contrast);
+    cursor: pointer;
+    border-radius: 0;
+  }
+
+  .sub-form button:hover { filter: brightness(1.08); }
+
+  .sub-alt { margin-top: var(--space-s); font-size: var(--step--2); }
+
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
+  }
+
+  @media (max-width: 560px) {
+    .sub { grid-template-columns: 1fr; }
+    .sub-label { margin-bottom: 8px; }
+    .sub-body { grid-column: 1; }
+  }
+</style>
