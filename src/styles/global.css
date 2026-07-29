@@ -39,16 +39,28 @@
   --card: #ffffff;
   --ink: #14140f;
   --ink-soft: #4c4c44;
-  --ink-faint: #86867c;
+  --ink-faint: #6c6c62;   /* passes AA on paper (5.1:1) and paper-2 (4.7:1) */
   --line: rgba(20, 20, 15, 0.14);
   --line-strong: rgba(20, 20, 15, 0.5);
   --rule: #14140f;              /* heavy structural rules */
 
-  --accent: #2340d8;           /* cobalt: links, numbers, emphasis */
-  --accent-bright: #2340d8;
-  --accent-contrast: #ffffff;
+  /* ---- Accent: yellow and grey ---------------------------------------
+     Yellow is a FIELD, never an ink. #ffd100 measures 1.4:1 against this
+     paper, far under the 4.5:1 floor for text, and a 1px rule or a 5px dot
+     in it is just as invisible as text would be.
 
-  --selection: rgba(35, 64, 216, 0.18);
+     So the system splits in two:
+       --accent        anything the eye must RESOLVE: type, thin rules,
+                       small marks, focus rings. Ochre here, yellow in dark.
+       --accent-field  large planes only: buttons, chips, blocks.
+       --accent-contrast  type sitting on a field.
+     -------------------------------------------------------------------- */
+  --accent: #6e5400;           /* ochre: links, numbers, emphasis, marks */
+  --accent-bright: #6e5400;
+  --accent-field: #ffd100;     /* the plane */
+  --accent-contrast: #14140f;  /* near-black on yellow: 12.6:1 */
+
+  --selection: rgba(255, 209, 0, 0.42);
 
   color-scheme: light;
 }
@@ -64,11 +76,12 @@
   --line-strong: rgba(241, 241, 236, 0.5);
   --rule: #f1f1ec;
 
-  --accent: #7d93ff;
-  --accent-bright: #7d93ff;
-  --accent-contrast: #0f0f13;
+  --accent: #ffd100;
+  --accent-bright: #ffd100;
+  --accent-field: #ffd100;
+  --accent-contrast: #14140f;
 
-  --selection: rgba(125, 147, 255, 0.26);
+  --selection: rgba(255, 209, 0, 0.3);
 
   color-scheme: dark;
 }
@@ -84,10 +97,11 @@
     --line: rgba(241, 241, 236, 0.16);
     --line-strong: rgba(241, 241, 236, 0.5);
     --rule: #f1f1ec;
-    --accent: #7d93ff;
-    --accent-bright: #7d93ff;
-    --accent-contrast: #0f0f13;
-    --selection: rgba(125, 147, 255, 0.26);
+    --accent: #ffd100;
+    --accent-bright: #ffd100;
+    --accent-field: #ffd100;
+    --accent-contrast: #14140f;
+    --selection: rgba(255, 209, 0, 0.3);
     color-scheme: dark;
   }
 }
@@ -178,7 +192,7 @@ img { max-width: 100%; height: auto; display: block; }
 
 .measure { max-width: var(--measure); }
 
-/* Section eyebrow: mono label, cobalt, with a short leading rule. */
+/* Section eyebrow: mono label in the accent, with a short leading rule. */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--step--2);
@@ -249,13 +263,13 @@ img { max-width: 100%; height: auto; display: block; }
 .btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
 .btn-solid {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-field);
+  border-color: var(--accent-field);
   color: var(--accent-contrast);
 }
 .btn-solid:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--accent-field);
+  border-color: var(--accent-field);
   color: var(--accent-contrast);
   filter: brightness(1.08);
 }

@@ -18,7 +18,9 @@ await mkdir(outDir, { recursive: true });
 const PAPER = '#fbfbf9';
 const INK = '#14140f';
 const SOFT = '#4c4c44';
-const ACCENT = '#2340d8';
+const FIELD = '#ffd100';
+const ON_FIELD = '#14140f';
+const OCHRE = '#6e5400';
 
 const esc = (s) =>
   String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -63,7 +65,7 @@ function card(piece) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="${PAPER}"/>
   <rect x="80" y="72" width="1040" height="5" fill="${INK}"/>
-  <rect x="80" y="96" width="${16 + esc(piece.kicker).length * 12.4}" height="30" fill="${ACCENT}"/>
+  <rect x="80" y="96" width="${16 + esc(piece.kicker).length * 12.4}" height="30" fill="${FIELD}"/>
   <text x="${89}" y="117" font-family="Inter, Helvetica, Arial, sans-serif" font-size="16"
         font-weight="700" letter-spacing="2.1" fill="#ffffff">${esc(piece.kicker.toUpperCase())}</text>
   <rect x="80" y="140" width="1040" height="1" fill="${INK}" opacity="0.25"/>
@@ -80,7 +82,7 @@ function card(piece) {
   <text x="80" y="586" font-family="Inter, Helvetica, Arial, sans-serif" font-size="19"
         fill="${SOFT}">${esc(SITE.domain)}</text>
   <text x="1120" y="556" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif"
-        font-size="19" font-weight="700" letter-spacing="1.6" fill="${ACCENT}">${esc(piece.readingTime.toUpperCase())}</text>
+        font-size="19" font-weight="700" letter-spacing="1.6" fill="${OCHRE}">${esc(piece.readingTime.toUpperCase())}</text>
   <text x="1120" y="586" text-anchor="end" font-family="Inter, Helvetica, Arial, sans-serif"
         font-size="19" fill="${SOFT}">${esc(piece.date)}</text>
 </svg>`;

@@ -2,9 +2,13 @@
    COMMENTARY  —  the long-form argument layout.
 
    Swiss / International Typographic Style on a two-rail grid, built entirely
-   from the site's own design tokens in global.css. It inherits the cobalt
-   accent, the hairline rules and dark mode for free. Do not hardcode a
-   colour in this file; if you need a new one, add a token upstream.
+   from the site's own design tokens in global.css. It inherits the accent,
+   the hairline rules and dark mode for free. Do not hardcode a colour in
+   this file; if you need a new one, add a token upstream.
+
+   Note the accent split: --accent-field is the yellow plane, --accent is
+   what the eye must resolve (type and thin marks). Never put type in the
+   field colour; it is 1.4:1 against the light paper.
 
    Structure a piece uses:
      .cm-mast      masthead: rail, headline, standfirst, byline
@@ -60,7 +64,7 @@
 }
 
 .cm .rail span:first-child {
-  background: var(--accent);
+  background: var(--accent-field);
   color: var(--accent-contrast);
   padding-left: 8px;
   padding-right: 8px;
@@ -173,7 +177,7 @@
 .cm blockquote {
   margin: var(--space-l) 0;
   padding: 16px 0 18px;
-  border-top: 6px solid var(--accent);
+  border-top: 7px solid var(--accent-field);
   border-bottom: 1px solid var(--rule);
   font-size: var(--step-2);
   line-height: 1.16;
@@ -275,7 +279,7 @@
   font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--accent-contrast);
-  background: var(--accent);
+  background: var(--accent-field);
   display: inline-block;
   justify-self: start;
   padding: 6px 14px 9px;
@@ -346,7 +350,7 @@
   display: inline-block;
   width: 9px;
   height: 9px;
-  background: var(--accent);
+  background: var(--accent-field);
   margin-right: 6px;
 }
 
@@ -418,7 +422,7 @@
 
 .cm .fix {
   background: var(--paper-2);
-  border-top: 4px solid var(--accent);
+  border-top: 4px solid var(--accent-field);
   padding: 14px 16px 16px;
 }
 
@@ -474,6 +478,12 @@
   color: var(--ink-faint);
   font-weight: 700;
   font-family: var(--font-mono);
+}
+
+.cm .cm-note-small {
+  font-size: var(--step--2);
+  color: var(--ink-soft);
+  margin-top: var(--space-m);
 }
 
 .cm .sources a { text-decoration: none; }

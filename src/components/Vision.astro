@@ -60,7 +60,14 @@ const principles = [
     max-width: 20ch;
     margin-bottom: var(--space-l);
   }
-  .statement .hl { color: var(--accent); }
+  .statement .hl {
+    color: var(--accent-contrast);
+    background: var(--accent-field);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 0 0.12em;
+    margin: 0 -0.02em;
+  }
 
   .vision .prose { max-width: var(--measure); }
 

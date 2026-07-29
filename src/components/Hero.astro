@@ -97,7 +97,14 @@ const specs = [
     letter-spacing: -0.035em;
     max-width: 16ch;
   }
-  .hero-headline .hl { color: var(--accent); }
+  .hero-headline .hl {
+    color: var(--accent-contrast);
+    background: var(--accent-field);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    padding: 0 0.12em;
+    margin: 0 -0.02em;
+  }
 
   .hero-sub {
     margin-top: var(--space-m);

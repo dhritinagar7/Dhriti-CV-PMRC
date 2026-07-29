@@ -8,7 +8,7 @@
 
   <!-- headline -->
   <text x="86" y="290" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-3" fill="#14140f">Human models of the</text>
-  <text x="86" y="386" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-3" fill="#2340d8">developing brain,</text>
+  <text x="86" y="386" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-3" fill="#ffd100">developing brain,</text>
   <text x="86" y="482" font-family="Helvetica, Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-3" fill="#14140f">built to heal it.</text>
 
   <!-- bottom rule + mono index -->
