@@ -1,0 +1,148 @@
+---
+/**
+ * A single commentary piece.
+ *
+ * The prose is an HTML fragment in src/commentary/<slug>.html —
+ * the raw output of the commentary workflow, with no <head> of its own.
+ * Everything around it (masthead, byline, colophon, corrections, canonical
+ * URL, share card) is generated from src/data/commentary.ts.
+ */
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Subscribe from '../../components/Subscribe.astro';
+import { SITE } from '../../config/site';
+import {
+  PUBLISHED,
+  findCommentary,
+  formatDate,
+  formatStamp,
+} from '../../data/commentary';
+import '../../styles/commentary.css';
+
+export function getStaticPaths() {
+  return PUBLISHED.map((piece) => ({ params: { slug: piece.slug } }));
+}
+
+const { slug } = Astro.params;
+const piece = findCommentary(slug!)!;
+
+// Vite inlines every fragment at build time. No runtime file access.
+const fragments = import.meta.glob('../../commentary/*.html', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+
+const key = Object.keys(fragments).find((p) => p.endsWith(`/${piece.slug}.html`));
+const body = key ? fragments[key] : '';
+
+const path = `/commentary/${piece.slug}`;
+const ogImage = `/og/commentary/${piece.slug}.png`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: piece.title,
+  description: piece.standfirst,
+  datePublished: piece.date,
+  dateModified: piece.updated ?? piece.date,
+  inLanguage: 'en',
+  mainEntityOfPage: new URL(path, SITE.url).href,
+  image: new URL(ogImage, SITE.url).href,
+  author: {
+    '@type': 'Person',
+    name: SITE.name,
+    url: SITE.url,
+    affiliation: { '@type': 'Organization', name: SITE.affiliation },
+  },
+  publisher: { '@type': 'Person', name: SITE.name, url: SITE.url },
+};
+---
+
+<Base
+  title={piece.title}
+  description={piece.standfirst}
+  path={path}
+  ogImage={ogImage}
+  ogType="article"
+>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(articleSchema)}
+  />
+
+  <Nav />
+
+  <main id="main" class="cm">
+    <article class="cm-wrap">
+      <header class="cm-mast">
+        <div class="rail">
+          {piece.rail.map((item) => <span>{item}</span>)}
+        </div>
+
+        <h1>{piece.title}</h1>
+        <p class="cm-standfirst">{piece.standfirst}</p>
+
+        <div class="cm-meta">
+          <span class="cm-stamp">
+            <time datetime={piece.date}>{formatStamp(piece.date)}</time>
+          </span>
+          <p class="cm-byline">
+            <strong>{SITE.name}</strong>
+            {SITE.jobTitle}, {SITE.affiliation}.
+            {piece.updated && (
+              <>
+                {' '}
+                <span class="cm-updated">
+                  Revised <time datetime={piece.updated}>{formatDate(piece.updated)}</time>.
+                </span>
+              </>
+            )}
+          </p>
+        </div>
+      </header>
+
+      <Fragment set:html={body} />
+
+      {(piece.corrections?.length || piece.unresolved?.length) && (
+        <section class="cm-colophon cm-corrections">
+          <h2>Corrections</h2>
+          <div>
+            {piece.corrections && piece.corrections.length > 0 ? (
+              <ul>
+                {piece.corrections.map((c) => (
+                  <li>
+                    <strong>{formatDate(c.date)}.</strong> {c.note}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                No corrections have been made to this piece since publication. If you find an
+                error, <a href={`mailto:${SITE.email}`}>tell me</a> and it will be logged here
+                rather than quietly edited.
+              </p>
+            )}
+
+            {piece.unresolved && piece.unresolved.length > 0 && (
+              <>
+                <p style="margin-top:var(--space-m)">
+                  <strong>Unresolved at the time of writing:</strong>
+                </p>
+                <ul>
+                  {piece.unresolved.map((u) => <li>{u}</li>)}
+                </ul>
+              </>
+            )}
+          </div>
+        </section>
+      )}
+
+      <Subscribe />
+    </article>
+  </main>
+
+  <Footer />
+</Base>
